@@ -3,7 +3,7 @@
   "displayName": "Agent Notes",
   "description": "Inline feedback comments on any file, visible as diagnostics for AI agents",
   "version": "0.1.0",
-  "publisher": "agent-notes",
+  "publisher": "AbdallahGamal",
   "engines": {
     "vscode": "^1.99.0"
   },
