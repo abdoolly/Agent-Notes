@@ -71,4 +71,15 @@ To regenerate: https://dev.azure.com → Profile → Personal Access Tokens:
 
 Never commit or hardcode the PAT.
 
+## Commit Convention
+
+Use conventional commits — the CI workflow uses these to auto-publish:
+
+- `fix: ...` → patch bump + publish
+- `feat: ...` → minor bump + publish
+- `feat!: ...` or `BREAKING CHANGE:` → major bump + publish
+- `docs: ...`, `chore: ...`, `ci: ...` → no publish
+
+Scopes are optional: `fix(store): ...`, `feat(panel): ...`
+
 <!-- MANUAL ADDITIONS END -->

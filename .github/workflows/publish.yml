@@ -1,0 +1,59 @@
+name: Publish Extension
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - run: npm run compile
+
+      - run: npm run test:unit
+
+      - name: Determine version bump from commits
+        id: bump
+        run: |
+          # Get commits since last tag (or all commits if no tags)
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            COMMITS=$(git log --format="%s" HEAD)
+          else
+            COMMITS=$(git log --format="%s" "$LAST_TAG"..HEAD)
+          fi
+
+          echo "Commits since last release:"
+          echo "$COMMITS"
+
+          BUMP="none"
+
+          # Check for breaking changes first (major)
+          if echo "$COMMITS" | grep -qiE "^(feat|fix|refactor)!:|BREAKING CHANGE"; then
+            BUMP="major"
+          # Check for features (minor)
+          elif echo "$COMMITS" | grep -qiE "^feat(\(.+\))?:"; then
+            BUMP="minor"
+          # Check for fixes, perf, refactor (patch)
+          elif echo "$COMMITS" | grep -qiE "^(fix|perf|refactor)(\(.+\))?:"; then
+            BUMP="patch"
+          fi
+
+          echo "bump=$BUMP" >> "$GITHUB_OUTPUT"
+          echo "Determined bump: $BUMP"
+
+      - name: Publish to marketplace
+        if: steps.bump.outputs.bump != 'none'
+        run: npx @vscode/vsce publish ${{ steps.bump.outputs.bump }}
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
