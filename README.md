@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="resources/icon.png" alt="Agent Notes Logo" width="128" height="128" />
+</p>
+
 # Agent Notes
 
 Leave inline feedback comments on any file in VS Code. Your AI coding agent sees them automatically as diagnostics and knows how to resolve them.
