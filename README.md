@@ -8,10 +8,10 @@ Leave inline feedback comments on any file in VS Code. Your AI coding agent sees
 
 ## Installation
 
-Install from the VS Code Marketplace or from a `.vsix` file:
+Search **"Agent Notes"** in the VS Code Extensions panel, or install via CLI:
 
 ```sh
-code --install-extension agent-notes-0.1.0.vsix
+code --install-extension AbdallahGamal.agent-notes
 ```
 
 ## Adding Feedback
