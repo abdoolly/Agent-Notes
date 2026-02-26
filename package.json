@@ -1,0 +1,135 @@
+{
+  "name": "agent-notes",
+  "displayName": "Agent Notes",
+  "description": "Inline feedback comments on any file, visible as diagnostics for AI agents",
+  "version": "0.1.0",
+  "publisher": "agent-notes",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "agent-notes.addFeedback",
+        "title": "Add Feedback",
+        "category": "Agent Notes"
+      },
+      {
+        "command": "agent-notes.deleteThread",
+        "title": "Delete Thread",
+        "category": "Agent Notes"
+      },
+      {
+        "command": "agent-notes.editComment",
+        "title": "Edit Comment",
+        "category": "Agent Notes"
+      },
+      {
+        "command": "agent-notes.reply",
+        "title": "Reply",
+        "category": "Agent Notes"
+      },
+      {
+        "command": "agent-notes.resolveThread",
+        "title": "Resolve Thread",
+        "category": "Agent Notes"
+      },
+      {
+        "command": "agent-notes.resolveThreadById",
+        "title": "Resolve Thread by ID",
+        "category": "Agent Notes"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "agent-notes.addFeedback",
+          "when": "editorTextFocus",
+          "group": "navigation"
+        }
+      ],
+      "comments/commentThread/context": [
+        {
+          "command": "agent-notes.reply",
+          "when": "commentController == agent-notes",
+          "group": "inline"
+        }
+      ],
+      "comments/commentThread/title": [
+        {
+          "command": "agent-notes.resolveThread",
+          "when": "commentController == agent-notes",
+          "group": "navigation"
+        }
+      ],
+      "comments/comment/title": [
+        {
+          "command": "agent-notes.editComment",
+          "when": "commentController == agent-notes",
+          "group": "group@1"
+        },
+        {
+          "command": "agent-notes.deleteThread",
+          "when": "commentController == agent-notes",
+          "group": "group@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "agent-notes.addFeedback",
+        "key": "ctrl+alt+f",
+        "mac": "cmd+alt+f",
+        "when": "editorTextFocus"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "agentNotesPanel",
+          "name": "Feedback",
+          "icon": "resources/feedback-icon.svg",
+          "contextualTitle": "Agent Notes"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": []
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "test": "node ./dist/test/runTest.js",
+    "test:unit": "mocha --require ts-node/register 'test/unit/**/*.test.ts'",
+    "test:integration": "node ./dist/test/runTest.js",
+"package": "npx @vscode/vsce package"
+  },
+  "dependencies": {
+    "diff-match-patch": "^1.0.5",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/diff-match-patch": "^1.0.36",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^9.0.0",
+    "@types/vscode": "^1.99.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/test-electron": "^2.3.0",
+    "@vscode/vsce": "^2.26.0",
+    "eslint": "^8.57.0",
+    "mocha": "^10.3.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
+  }
+}
