@@ -8,7 +8,8 @@ tsconfig.json
 **/*.map
 **/*.ts
 !dist/**
-node_modules/**
 specs/**
 .specify/**
 .claude/**
+.env*
+*.vsix
